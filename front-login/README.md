@@ -1,16 +1,80 @@
-# React + Vite
+# Front-end - Sistema de Login
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este módulo é responsável pela interface do usuário e comunicação com o back-end.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+##  Estrutura
 
-## React Compiler
+- Componentes React
+- Hooks (`useState`, `useEffect`)
+- Navegação com React Router
+- Consumo de API com Axios
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Autenticação
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Fluxo:
+
+1. Usuário faz login
+2. Recebe um token JWT
+3. Token é salvo no localStorage
+4. Um interceptor do Axios adiciona o token automaticamente nas requisições
+
+---
+
+## Interceptor (ponto importante)
+
+O Axios foi configurado para enviar automaticamente:
+em todas as requisições protegidas.
+
+```js
+api.interceptors.request.use((config)=>{
+    const token = localStorage.getItem("token");
+
+    if(token){
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+})
+```
+---
+
+##  Consumo de API
+
+Exemplo:
+
+```js
+const response = await api.get("/product/list");
+```
+
+### Gerenciamento de estado
+---
+- useState → armazenar dados
+- useEffect → chamadas à API
+
+### Funcionalidades
+---
+
+- Tela de login
+- Tela de cadastro
+- Consumo de API protegida
+- Exibição de produtos do usuário
+
+### Problemas resolvidos no desenvolvimento
+---
+
+- Envio automático do token
+- Erros de CORS
+- Diferença entre Postman e navegador
+- Atualização de estado no React
+
+### Melhorias futuras
+
+---
+- AuthContext (controle global de autenticação)
+- Proteção de rotas
+- Feedback visual (loading, erros)
+- UI mais moderna
