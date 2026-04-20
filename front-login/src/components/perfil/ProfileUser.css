@@ -1,0 +1,14 @@
+.container-prof{
+    padding: 10px;
+    background-color: var(--primary);
+}
+
+h1{
+    color: var(--blue-energy);
+}
+h1:hover{
+    color: var(--blue-energy-active);
+}
+p{
+    color: var(--color-text-w);
+}
